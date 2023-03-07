@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground — Complete Intro to Vue 3</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <h1>Avatar: The Last Airbender - Characters</h1>
+    <div id="app">
+      <!-- There's v-show, but v-if is apparently more popular. v-if won't even be in the dom if false. v-show does a css hide -->
+      <p v-if="characterList.length === 0">There are no characters, or vue did not mount successfully</p>
+      <ul>
+        <li v-for="(character, index) in characterList" :key="character.id">
+          {{ character.name }}{{ index === characterList.length - 1 ? "" : "," }}
+        </li>
+      </ul>
+    </div>
+
+    <script>
+      // Ben started doing it this way instead
+      Vue.createApp({
+        data: () => ({
+          characterList: [
+            { name: "Aang", id: "5c70d3ee-76a7-4d88-bf83-21045b9f09d5" },
+            { name: "Katara", id: "11c76592-935a-47ea-89ff-28db483a6c25" },
+            { name: "Sokka", id: "d3b54704-8269-4334-896d-c12c8da87176" },
+            { name: "Toph", id: "d45a58d3-5f52-4332-85bb-0e652f4dafd9" },
+            { name: "Zuko", id: "c7a6e9c3-2876-4d44-ab7d-c981bb08cfd7" },
+          ],
+        }),
+      }).mount("#app");
+    </script>
+  </body>
+</html>

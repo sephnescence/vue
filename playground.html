@@ -9,7 +9,28 @@
   <body>
     <h1>Hello Frontend Masters!</h1>
     <div id="app">
-      <p v-if="message.length % 2 === 0">Even: {{ message }}</p>
+      <p>Count: {{ count }}</p>
+      <!-- Copilot suggested this -->
+      <button @click="increment">Increment (Copilot's way)</button>
+      <!-- Ben wrong this first though, so I guess both are valid -->
+      <button v-on:click="increment">Increment (Ben's way)</button>
+      <!-- So it turns out that @ is an alias for v-on -->
+      <br />
+      <br />
+      <h1>One way binding</h1>
+      <!-- You do not need to even have v-bind. Just leave the colon character there -->
+      <input type="number" v-bind:value="incrementAmount" v-on:input="setIncrementAmountOneWayBinding" /><br />
+      <br />
+      <h1>Two way binding</h1>
+      <!-- Syntactical sugar for the above, pretty much -->
+      <!-- With the exception that it's known to be a number this time -->
+      <!-- Vue 2 -->
+      <!-- <input type="number" v-model.number="incrementAmount" /><br /> -->
+      <!-- Vue 3 -->
+      <input type="number" v-model="incrementAmount" /><br />
+
+      <!-- Ben kept the old code around for some reason 🤷 -->
+      <hr />
       <p v-else>Odd: {{ message }}</p>
       <ul>
         <li v-for="number in listOfNumbers" :key="number">{{ number }}</li>
@@ -35,6 +56,8 @@
       const app = createApp({
         data() {
           return {
+            count: 10,
+            incrementAmount: 2,
             message: "Hello, it works!",
             listOfNumbers: [1, 2, 3, 4, 5],
             someObject: [
@@ -70,6 +93,21 @@
               },
             ],
           };
+        },
+        methods: {
+          // When using the below, you con't even need to define setIncrementAmountOneWayBinding
+          // <input type="number" v-model="incrementAmount" /><br />
+          setIncrementAmountOneWayBinding(event) {
+            // Even though the type of this input is a number, the value is a string
+            this.incrementAmount = event.target.value;
+          },
+          increment() {
+            // Vue 2
+            // this.$data.count++;
+
+            // Vue 3
+            this.count++;
+          },
         },
       });
       app.mount("#app");
