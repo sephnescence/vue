@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground — Complete Intro to Vue 3</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Ben wanted up to make a quick app to add characters and favourite them, but instead I opted to use a Marvel Snap example instead -->
+    <h1>Event Handing Exercise!</h1>
+    <div style="display:inline; float: left; width: 40%;">
+      <div id="app">
+        <h4>Add new available card! (You can click the button or hit Return. Hitting return also doesn't lose focus. Nice)</h4>
+        <input type="text" v-model="addNewAvailableCardText" @keyup.enter="addNewAvailableCard" />
+        <button @click="addNewAvailableCard">Add</button>
+        <hr />
+        <h4>Available Cards</h4>
+        <ul>
+          <li v-for="card in availableCards" :key="card">
+            {{ card }}
+            <button v-if="collectedCards.indexOf(card) === -1" @click="addAvailableCardToCollectedCard(card)">Add to collected cards</button>
+          </li>
+        </ul>
+        <hr />
+        <h4>Collected Cards</h4>
+        <ul>
+          <li v-for="card in collectedCards" :key="card">
+            {{ card }}
+          </li>
+        </ul>
+      </div>
+      <script>
+        Vue.createApp({
+          data: () => ({
+            // Super cool that this actually ended up being what Ben did in the video
+            addNewAvailableCardText: "",
+            availableCards: [],
+            collectedCards: []
+          }),
+          methods: {
+            addAvailableCardToCollectedCard(cardName) {
+              this.collectedCards.push(cardName)
+            },
+            addNewAvailableCard() {
+              this.availableCards.push(this.addNewAvailableCardText)
+              this.addNewAvailableCardText = ''
+            }
+          }
+        }).mount('#app')
+      </script>
+    </div>
+  </body>
+</html>
