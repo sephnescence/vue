@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground — Complete Intro to Vue 3</title>
+  </head>
+  <body>
+    <h1>Hello Frontend Masters!</h1>
+    <div id="app">
+      <p v-if="message.length % 2 === 0">Even: {{ message }}</p>
+      <p v-else>Odd: {{ message }}</p>
+      <ul>
+        <li v-for="number in listOfNumbers" :key="number">{{ number }}</li>
+      </ul>
+      <h2>To illustrate a more complex each</h2>
+      <ul>
+        <li v-for="item in someObject" :key="item.id">
+          {{ item.name }}
+          <ul>
+            <li v-for="number in item.numbers" :key="number">{{ number }}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      // Vue 3
+      const { createApp } = Vue;
+
+      // Vue 2
+      // new vue()
+
+      const app = createApp({
+        data() {
+          return {
+            message: "Hello, it works!",
+            listOfNumbers: [1, 2, 3, 4, 5],
+            someObject: [
+              {
+                name: "Hi",
+                id: "594c187d-bba4-4e76-87c2-3f4fa9d8a3ab",
+                numbers: [1, 2, 3],
+              },
+              {
+                name: "Im",
+                id: "0168eef9-4e69-4419-a3d9-9e6b83ede388",
+                numbers: [1, 2, 3],
+              },
+              {
+                name: "the",
+                id: "6c9e7c49-5b37-4641-a6de-9573eee5ae06",
+                numbers: [1, 2, 3],
+              },
+              {
+                name: "problem",
+                id: "7e5e8ab1-1018-47f1-bcaf-9c53939775b8",
+                numbers: [1, 2, 3],
+              },
+              {
+                name: "its",
+                id: "351935ac-6c94-4878-a8fe-034be44a8fb3",
+                numbers: [1, 2, 3],
+              },
+              {
+                name: "me",
+                id: "37a5f21b-2b53-48ff-b5d5-9633aba1bc2a",
+                numbers: [1, 2, 3],
+              },
+            ],
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>
