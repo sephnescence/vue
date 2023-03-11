@@ -1,10 +1,7 @@
 import { createApp } from 'vue'
-// import FrontendMastersExample from './components/FrontendMastersExample.vue'
-// import MarvelSnapDeckListVue from './components/MarvelSnapDeckList.vue'
-import MarvelSnapCardList from './components/MarvelSnap/MarvelSnapCardList.vue'
+import MarvelSnapCardListApp from './components/MarvelSnap/MarvelSnapCardListApp.vue'
 
+// Ben doesn't use this, but I'll leave it here
 // import './assets/main.css'
 
-// createApp(FrontendMastersExampleVue).mount('#app')
-// createApp(MarvelSnapDeckListVue).mount('#app')
-createApp(MarvelSnapCardList).mount('#app')
+createApp(MarvelSnapCardListApp).mount('#app')

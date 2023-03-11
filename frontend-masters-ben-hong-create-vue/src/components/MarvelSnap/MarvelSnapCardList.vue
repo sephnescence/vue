@@ -1,13 +1,14 @@
 <script>
 import MarvelSnapCard from './MarvelSnapCard.vue'
-// Anything commented hasn't been covered in the course, or I've not played with just yet
-
-const baseVariantOnly = true
-const selectedCard = null
-const cardData = []
 
 export default {
-  data() {
+  async setup() {
+    const response = await fetch('http://localhost/api/snap_fan_cards/all')
+    const cardData = await response.json()
+
+    const baseVariantOnly = true
+    const selectedCard = null
+
     return {
       cardData,
       baseVariantOnly,
@@ -15,12 +16,6 @@ export default {
     }
   },
   methods: {
-    async fetchCardData() {
-      const response = await fetch('http://localhost/api/snap_fan_cards/all')
-      const data = await response.json()
-
-      this.cardData = data
-    },
     toggleBaseCardOnly() {
       this.baseVariantOnly = !this.baseVariantOnly
     },
@@ -35,7 +30,6 @@ export default {
     }
   },
   emits: [],
-  // props: {},
   components: {
     MarvelSnapCard
   },
@@ -70,36 +64,6 @@ export default {
       return filteredCards
     }
   },
-  watch: {},
-  created() {
-    // Co-Pilot made these... I wonder if this is better practice? Surely not
-    // this.$root.$on('cardSelected', this.handleCardSelectedEmission)
-    // this.$root.$on('resetSelectedCard', this.resetSelectedCard)
-
-    // I just wanted to fetch cards from my api lol
-    this.fetchCardData()
-  },
-  // setup() {
-  //   return {}
-  // },
-  // activated() {
-  //   console.log('activated') // No idea when this gets done
-  // },
-  // beforeCreate() {},
-  // afterCreate() {},
-  // beforeMount() {},
-  // mounted() {},
-  // beforeUpdate() {},
-  // updated() {},
-  // beforeDestroy() {},
-  // destroyed() {},
-  // errorCaptured() {},
-  // beforeUnmount() {},
-  // unmounted() {},
-  // render() {},
-  // renderTracked() {},
-  // renderTriggered() {},
-  // serverPrefetch() {},
 }
 </script>
 
@@ -123,9 +87,3 @@ export default {
     </template>
   </div>
 </template>
-
-<style>
-body {
-  background-color: #2c0b47;
-}
-</style>
