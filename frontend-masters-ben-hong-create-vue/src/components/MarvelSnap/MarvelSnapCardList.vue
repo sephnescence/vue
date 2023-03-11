@@ -1,11 +1,12 @@
 <script>
 import MarvelSnapCard from './MarvelSnapCard.vue'
-import cardData from './data/marvelSnapCardData.json' // BTTODO - Fetch via api instead
+// import cardData from './data/marvelSnapCardData.json' // BTTODO - Fetch via api instead
 // import cardData from './data/marvelSnapCardDataAero.json' // BTTODO - Fetch via api instead
 // Anything commented hasn't been covered in the course, or I've not played with just yet
 
 const baseVariantOnly = true
 const selectedCard = null
+const cardData = []
 
 export default {
   data() {
@@ -16,6 +17,12 @@ export default {
     }
   },
   methods: {
+    async fetchCardData() {
+      const response = await fetch('http://localhost/api/snap_fan_cards/all')
+      const data = await response.json()
+
+      this.cardData = data
+    },
     toggleBaseCardOnly() {
       this.baseVariantOnly = !this.baseVariantOnly
     },
@@ -30,12 +37,7 @@ export default {
     }
   },
   emits: [],
-  props: {
-    // baseVariantOnly: {
-    //   type: Boolean,
-    //   default: true
-    // }
-  },
+  // props: {},
   components: {
     MarvelSnapCard
   },
@@ -70,11 +72,21 @@ export default {
       return filteredCards
     }
   },
-  watch: {}
+  watch: {},
+  created() {
+    // Co-Pilot made these... I wonder if this is better practice? Surely not
+    // this.$root.$on('cardSelected', this.handleCardSelectedEmission)
+    // this.$root.$on('resetSelectedCard', this.resetSelectedCard)
+
+    // I just wanted to fetch cards from my api lol
+    this.fetchCardData()
+  },
   // setup() {
   //   return {}
   // },
-  // activated() {},
+  // activated() {
+  //   console.log('activated') // No idea when this gets done
+  // },
   // beforeCreate() {},
   // afterCreate() {},
   // beforeMount() {},
@@ -95,11 +107,9 @@ export default {
 
 <template>
   <div id="app">
-    <template v-if="this.selectedCard === null">
-      <button v-if="!this.baseVariantOnly" @click="toggleBaseCardOnly">Show Base Cards Only</button>
-      <button v-if="this.baseVariantOnly" @click="toggleBaseCardOnly">Show all Variants</button>
-      <br />
-    </template>
+    <button v-if="!this.baseVariantOnly" @click="toggleBaseCardOnly">Show Base Cards Only</button>
+    <button v-if="this.baseVariantOnly" @click="toggleBaseCardOnly">Show all Variants</button>
+    <br />
     <template v-if="this.selectedCard !== null">
       <button @click="resetSelectedCard">Reset Selected Card</button>
       <br />

@@ -15,7 +15,6 @@ export default {
   },
   methods: {
     emitCardSelected() {
-      console.log(this.card.name)
       this.$emit('cardSelected', this.card.name)
     }
   },
