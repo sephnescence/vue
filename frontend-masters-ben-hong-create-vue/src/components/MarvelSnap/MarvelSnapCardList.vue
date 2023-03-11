@@ -1,7 +1,5 @@
 <script>
 import MarvelSnapCard from './MarvelSnapCard.vue'
-// import cardData from './data/marvelSnapCardData.json' // BTTODO - Fetch via api instead
-// import cardData from './data/marvelSnapCardDataAero.json' // BTTODO - Fetch via api instead
 // Anything commented hasn't been covered in the course, or I've not played with just yet
 
 const baseVariantOnly = true
