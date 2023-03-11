@@ -1,0 +1,107 @@
+{
+  "Aero": {
+    "name": "Aero",
+    "logo": "http://[::1]:4002/resources/images/variants/Aero/Logo.webp",
+    "variants": {
+      "Aero": {
+        "name": "Aero",
+        "artists": {
+          "artist": "Eric Guerrero",
+          "colourist": "Ryan Kinnaird"
+        },
+        "downloads": {
+          "backgrounds": [
+            "http://[::1]:4002/resources/images/variants/Aero/Background1.webp",
+            "http://[::1]:4002/resources/images/variants/Aero/Background2.webp"
+          ],
+          "foregrounds": ["http://[::1]:4002/resources/images/variants/Aero/Foreground1.webp"]
+        }
+      },
+      "Aero_01": {
+        "name": "Aero_01",
+        "artists": {
+          "artist": "G-Angle",
+          "colourist": "G-Angle"
+        },
+        "downloads": {
+          "backgrounds": [
+            "http://[::1]:4002/resources/images/variants/Aero_01/Background1.webp",
+            "http://[::1]:4002/resources/images/variants/Aero_01/Background2.webp"
+          ],
+          "foregrounds": ["http://[::1]:4002/resources/images/variants/Aero_01/Foreground1.webp"]
+        }
+      },
+      "Aero_02": {
+        "name": "Aero_02",
+        "artists": {
+          "artist": "Artgerm",
+          "colourist": "Artgerm"
+        },
+        "downloads": {
+          "backgrounds": [
+            "http://[::1]:4002/resources/images/variants/Aero_02/Background1.webp",
+            "http://[::1]:4002/resources/images/variants/Aero_02/Background2.webp"
+          ],
+          "foregrounds": ["http://[::1]:4002/resources/images/variants/Aero_02/Foreground1.webp"]
+        }
+      },
+      "Aero_03": {
+        "name": "Aero_03",
+        "artists": {
+          "artist": "G-Angle",
+          "colourist": "G-Angle"
+        },
+        "downloads": {
+          "backgrounds": [
+            "http://[::1]:4002/resources/images/variants/Aero_03/Background1.webp",
+            "http://[::1]:4002/resources/images/variants/Aero_03/Background2.webp"
+          ],
+          "foregrounds": ["http://[::1]:4002/resources/images/variants/Aero_03/Foreground1.webp"]
+        }
+      },
+      "Aero_04": {
+        "name": "Aero_04",
+        "artists": {
+          "artist": "Volmi",
+          "colourist": "Volmi"
+        },
+        "downloads": {
+          "backgrounds": [
+            "http://[::1]:4002/resources/images/variants/Aero_04/Background1.webp",
+            "http://[::1]:4002/resources/images/variants/Aero_04/Background2.webp"
+          ],
+          "foregrounds": ["http://[::1]:4002/resources/images/variants/Aero_04/Foreground1.webp"]
+        }
+      },
+      "Aero_05": {
+        "name": "Aero_05",
+        "artists": {
+          "artist": "Woo-Chul Lee",
+          "colourist": "Woo-Chul Lee"
+        },
+        "downloads": {
+          "backgrounds": [
+            "http://[::1]:4002/resources/images/variants/Aero_05/Background1.webp",
+            "http://[::1]:4002/resources/images/variants/Aero_05/Background2.webp"
+          ],
+          "foregrounds": ["http://[::1]:4002/resources/images/variants/Aero_05/Foreground1.webp"]
+        }
+      },
+      "Aero_06": {
+        "name": "Aero_06",
+        "artists": {
+          "artist": "Rian Gonzales",
+          "colourist": "Rian Gonzales"
+        },
+        "downloads": {
+          "backgrounds": [
+            "http://[::1]:4002/resources/images/variants/Aero_06/Background1.webp",
+            "http://[::1]:4002/resources/images/variants/Aero_06/Background2.webp"
+          ],
+          "foregrounds": ["http://[::1]:4002/resources/images/variants/Aero_06/Foreground1.webp"]
+        }
+      }
+    },
+    "favourite": "Aero"
+  }
+}

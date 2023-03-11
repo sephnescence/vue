@@ -1,17 +1,69 @@
 <script>
 import cardData from './data/marvelSnapCardData.json' // BTTODO - Fetch via api instead
+// import cardData from './data/marvelSnapCardDataAero.json' // BTTODO - Fetch via api instead
 // Anything commented hasn't been covered in the course, or I've not played with just yet
+
+const baseVariantOnly = true
+const selectedCard = null
+
 export default {
   data() {
     return {
-      cardData
+      cardData,
+      baseVariantOnly,
+      selectedCard
     }
   },
-  methods: {},
+  methods: {
+    toggleBaseCardOnly() {
+      this.baseVariantOnly = !this.baseVariantOnly
+    },
+    resetSelectedCard() {
+      this.selectedCard = null
+    },
+    selectCard(selectedCard) {
+      this.selectedCard = selectedCard
+    }
+  },
   emits: [],
-  props: {},
+  props: {
+    // baseVariantOnly: {
+    //   type: Boolean,
+    //   default: true
+    // }
+  },
   // components: {},
-  computed: {},
+  computed: {
+    filteredCardData() {
+      const filteredCards = []
+
+      Object.values(this.cardData).forEach((card) => {
+        if (this.selectedCard !== null) {
+          if (card.name !== this.selectedCard) {
+            return
+          }
+        }
+
+        const newCard = {
+          name: card.name,
+          logo: card.logo,
+          variants: []
+        }
+
+        Object.values(card.variants).forEach((variant) => {
+          if (this.baseVariantOnly && variant.name !== card.name) {
+            return
+          }
+
+          newCard.variants.push(variant)
+        })
+
+        filteredCards.push(newCard)
+      })
+
+      return filteredCards
+    }
+  },
   watch: {}
   // setup() {
   //   return {}
@@ -37,8 +89,26 @@ export default {
 
 <template>
   <div id="app">
-    <template v-for="card in cardData" :key="card.name">
-      <div class="generated-card" v-for="variant in card.variants" :key="variant.name">
+    <template v-if="this.selectedCard === null">
+      <button v-if="!this.baseVariantOnly" @click="toggleBaseCardOnly">Show Base Cards Only</button>
+      <button v-if="this.baseVariantOnly" @click="toggleBaseCardOnly">Show all Variants</button>
+      <br />
+    </template>
+    <template v-if="this.selectedCard !== null">
+      <button @click="resetSelectedCard">Reset Selected Card</button>
+      <br />
+    </template>
+    <!-- <template v-for="card in this.cardData" :key="card.name"> -->
+    <template v-for="card in filteredCardData" :key="card.name">
+      <!-- <template >
+        v-if="!this.baseVariantOnly || variant.name === card.name"
+      </template> -->
+      <div
+        class="generated-card"
+        v-for="variant in card.variants"
+        :key="variant.name"
+        @click="selectCard(card.name)"
+      >
         <div class="generated-card-inner">
           <div
             class="generated-card-background-one"
