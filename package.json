@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "sass": "^1.59.2"
+  },
+  "dependencies": {
+    "vue-router": "^4.1.6"
   }
 }

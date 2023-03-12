@@ -77,7 +77,8 @@ const emitCardSelected = () => {
 <style lang="scss">
 div.generated-card {
   display: inline-block;
-  width: 201px;
+  /* width: 201px; */ /* What I originally had */
+  width: 190px; /* Trialing this */
   height: 201px;
 
   div.generated-card-inner {

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1",
+    "name": "Death Wave JH",
+    "cards": [
+      {
+        "cardName": "SquirrelGirl",
+        "variantName": "SquirrelGirl"
+      },
+      {
+        "cardName": "IceMan",
+        "variantName": "Iceman"
+      },
+      {
+        "cardName": "Yondu",
+        "variantName": "Yondu"
+      },
+      {
+        "cardName": "BuckyBarnes",
+        "variantName": "BuckyBarnes"
+      },
+      {
+        "cardName": "Carnage",
+        "variantName": "Carnage"
+      },
+      {
+        "cardName": "Killmonger",
+        "variantName": "Killmonger"
+      },
+      {
+        "cardName": "Wave",
+        "variantName": "Wave"
+      },
+      {
+        "cardName": "Deathlok",
+        "variantName": "Deathlok"
+      },
+      {
+        "cardName": "ShangChi",
+        "variantName": "ShangChi"
+      },
+      {
+        "cardName": "Aero",
+        "variantName": "Aero_03"
+      },
+      {
+        "cardName": "SheHulk",
+        "variantName": "SheHulk"
+      },
+      {
+        "cardName": "Death",
+        "variantName": "Death_02"
+      }
+    ]
+  }
+]
