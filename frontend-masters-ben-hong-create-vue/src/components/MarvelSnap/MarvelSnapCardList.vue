@@ -1,16 +1,25 @@
 <script>
 import MarvelSnapCard from './MarvelSnapCard.vue'
 
+const baseVariantOnly = true
+const selectedCard = null
+
 export default {
   async setup() {
     const response = await fetch('http://localhost/api/snap_fan_cards/all')
     const cardData = await response.json()
 
-    const baseVariantOnly = true
-    const selectedCard = null
+    // const baseVariantOnly = true
+    // const selectedCard = null
 
     return {
       cardData,
+      // baseVariantOnly,
+      // selectedCard
+    }
+  },
+  data() {
+    return {
       baseVariantOnly,
       selectedCard
     }

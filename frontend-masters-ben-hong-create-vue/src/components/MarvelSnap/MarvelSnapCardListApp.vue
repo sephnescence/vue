@@ -10,9 +10,9 @@ export default {
 </script>
 
 <template>
-  <div id="app">
+  <div id="app" class="marvel-snap-card-list">
     <Suspense>
-      <MarvelSnapCardList class="marvel-snap-card-list" />
+      <MarvelSnapCardList />
 
       <template #fallback>
         <div>Loading Cards...</div>
@@ -24,9 +24,10 @@ export default {
 <style>
 body {
   margin: 0;
+  background-color: #2c0b47;
 }
 .marvel-snap-card-list {
-  background-color: #2c0b47;
   padding: 8px;
+  color: white;
 }
 </style>
