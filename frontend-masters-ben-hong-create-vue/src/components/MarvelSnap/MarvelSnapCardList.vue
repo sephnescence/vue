@@ -12,6 +12,8 @@ export default {
     const baseVariantOnly = ref(true)
     const selectedCard = ref(null)
 
+    // Alternatively you can use `const state = reactive({})` (imported from vue), but be sure to return it from setup()
+
     // Note that the refs aren't actually true and null respectively, they are RefImpl objects (I think Ben call them reference implementations).
     //  you can access them by calling .value. e.g. baseVariantOnly.value is a boolean
     // Similarly, you might have noticed when console logging, you see Proxies instead. You want to call .target on a Proxy
