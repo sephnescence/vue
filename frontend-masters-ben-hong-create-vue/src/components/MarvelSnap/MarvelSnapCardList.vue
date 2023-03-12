@@ -8,6 +8,11 @@ const cardData = await response.json()
 // Because these are reactive, you need to define them with ref() so that Vue will track them.
 //  So I no longer need to define them as consts above or have the data() method in use
 const baseVariantOnly = ref(true)
+const showBackground1 = ref(true)
+const showBackground2 = ref(true)
+const showForeground = ref(true)
+const showLogo = ref(true)
+const showMask = ref(true)
 const selectedCard = ref(null)
 
 // Alternatively you can use `const state = reactive({})` (imported from vue), but be sure to return it from setup()
@@ -46,6 +51,26 @@ const filteredCardData = computed(() => {
   return filteredCards
 })
 
+const toggleShowBackground1 = () => {
+  showBackground1.value = !showBackground1.value
+}
+
+const toggleShowBackground2 = () => {
+  showBackground2.value = !showBackground2.value
+}
+
+const toggleShowForeground = () => {
+  showForeground.value = !showForeground.value
+}
+
+const toggleShowLogo = () => {
+  showLogo.value = !showLogo.value
+}
+
+const toggleShowMask = () => {
+  showMask.value = !showMask.value
+}
+
 const toggleBaseCardOnly = () => {
   baseVariantOnly.value = !baseVariantOnly.value
 }
@@ -68,6 +93,21 @@ const selectCard = (newSelectedCard) => {
     <button v-if="!baseVariantOnly" @click="toggleBaseCardOnly">Show Base Cards Only</button>
     <button v-if="baseVariantOnly" @click="toggleBaseCardOnly">Show all Variants</button>
     <br />
+    <button v-if="!showBackground1" @click="toggleShowBackground1">Show Background 1</button>
+    <button v-if="showBackground1" @click="toggleShowBackground1">Hide Background 1</button>
+    <br />
+    <button v-if="!showBackground2" @click="toggleShowBackground2">Show Background 2</button>
+    <button v-if="showBackground2" @click="toggleShowBackground2">Hide Background 2</button>
+    <br />
+    <button v-if="!showForeground" @click="toggleShowForeground">Show Foreground</button>
+    <button v-if="showForeground" @click="toggleShowForeground">Hide Foreground</button>
+    <br />
+    <button v-if="!showLogo" @click="toggleShowLogo">Show Logo</button>
+    <button v-if="showLogo" @click="toggleShowLogo">Hide Logo</button>
+    <br />
+    <button v-if="!showMask" @click="toggleShowMask">Show Mask</button>
+    <button v-if="showMask" @click="toggleShowMask">Hide Mask</button>
+    <br />
     <template v-if="selectedCard !== null">
       <button @click="resetSelectedCard">Reset Selected Card</button>
       <br />
@@ -79,6 +119,11 @@ const selectCard = (newSelectedCard) => {
         :key="card.name + '|' + variant.name"
         :card="card"
         :variant="variant"
+        :showBackground1="showBackground1"
+        :showBackground2="showBackground2"
+        :showForeground="showForeground"
+        :showLogo="showLogo"
+        :showMask="showMask"
       />
     </template>
   </div>

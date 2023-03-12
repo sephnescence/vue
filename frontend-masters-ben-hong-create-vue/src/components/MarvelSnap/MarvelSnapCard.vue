@@ -11,6 +11,26 @@ export default {
     variant: {
       type: Object,
       required: true
+    },
+    showBackground1: {
+      type: Boolean,
+      required: true
+    },
+    showBackground2: {
+      type: Boolean,
+      required: true
+    },
+    showForeground: {
+      type: Boolean,
+      required: true
+    },
+    showLogo: {
+      type: Boolean,
+      required: true
+    },
+    showMask: {
+      type: Boolean,
+      required: true
     }
   },
   methods: {
@@ -28,19 +48,25 @@ export default {
       <div
         class="generated-card-background-one"
         v-if="variant.downloads.backgrounds[0]"
-        :style="{ backgroundImage: 'url(' + variant.downloads.backgrounds[0] + ')' }"
+        :style="{
+          backgroundImage: showBackground1 ? 'url(' + variant.downloads.backgrounds[0] + ')' : 'none',
+          maskImage: showMask ? 'url(http://[::1]:4002/resources/images/cardmask.webp)' : 'none' // BTTODO - Get from the api
+        }"
       >
         <div
           class="generated-card-background-two"
           v-if="variant.downloads.backgrounds[1]"
-          :style="{ backgroundImage: 'url(' + variant.downloads.backgrounds[1] + ')' }"
+          :style="{ backgroundImage: showBackground2 ? 'url(' + variant.downloads.backgrounds[1] + ')' : 'none' }"
         ></div>
       </div>
       <div
         class="generated-card-foreground"
-        :style="{ backgroundImage: 'url(' + variant.downloads.foregrounds[0] + ')' }"
+        :style="{
+          backgroundImage: showForeground ? 'url(' + variant.downloads.foregrounds[0] + ')' : 'none'
+        }"
       >
         <div
+          v-if="showLogo"
           class="generated-card-logo"
           :style="{ backgroundImage: 'url(' + card.logo + ')' }"
         ></div>
@@ -68,8 +94,6 @@ div.generated-card > div.generated-card-inner > div.generated-card-background-on
   background-repeat: no-repeat;
   background-size: 201px 201px;
   background-position: center center;
-  mask-image: url('http://[::1]:4002/resources/images/cardmask.webp'); /* BTTODO - Get from the api */
-  -webkit-mask-image: url('http://[::1]:4002/resources/images/cardmask.webp'); /* BTTODO - Get from the api */
   mask-size: 148px 201px;
   -webkit-mask-size: 148px 201px;
   mask-repeat: no-repeat;
