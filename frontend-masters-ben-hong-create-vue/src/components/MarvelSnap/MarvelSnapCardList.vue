@@ -1,6 +1,6 @@
 <script>
 import MarvelSnapCard from './MarvelSnapCard.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 export default {
   async setup() {
@@ -12,8 +12,43 @@ export default {
     const baseVariantOnly = ref(true)
     const selectedCard = ref(null)
 
+    // Note that the refs aren't actually true and null respectively, they are RefImpl objects (I think Ben call them reference implementations).
+    //  you can access them by calling .value. e.g. baseVariantOnly.value is a boolean
+    // Similarly, you might have noticed when console logging, you see Proxies instead. You want to call .target on a Proxy
+
+    const filteredCardData = computed(() => {
+      const filteredCards = []
+
+      Object.values(cardData).forEach((card) => {
+        if (selectedCard.value !== null) {
+          if (card.name !== selectedCard.value) {
+            return
+          }
+        }
+
+        const newCard = {
+          name: card.name,
+          logo: card.logo,
+          variants: []
+        }
+
+        Object.values(card.variants).forEach((variant) => {
+          if (baseVariantOnly.value && variant.name !== card.name) {
+            return
+          }
+
+          newCard.variants.push(variant)
+        })
+
+        filteredCards.push(newCard)
+      })
+
+      return filteredCards
+    })
+
     return {
-      cardData,
+      // cardData, // I don't even need to expose this anymore
+      filteredCardData,
       baseVariantOnly,
       selectedCard
     }
@@ -35,37 +70,6 @@ export default {
   emits: [],
   components: {
     MarvelSnapCard
-  },
-  computed: {
-    filteredCardData() {
-      const filteredCards = []
-
-      Object.values(this.cardData).forEach((card) => {
-        if (this.selectedCard !== null) {
-          if (card.name !== this.selectedCard) {
-            return
-          }
-        }
-
-        const newCard = {
-          name: card.name,
-          logo: card.logo,
-          variants: []
-        }
-
-        Object.values(card.variants).forEach((variant) => {
-          if (this.baseVariantOnly && variant.name !== card.name) {
-            return
-          }
-
-          newCard.variants.push(variant)
-        })
-
-        filteredCards.push(newCard)
-      })
-
-      return filteredCards
-    }
   },
 }
 </script>
