@@ -74,59 +74,53 @@ const emitCardSelected = () => {
   </div>
 </template>
 
-<style>
+<style lang="scss">
 div.generated-card {
   display: inline-block;
   width: 201px;
   height: 201px;
-}
 
-div.generated-card > div.generated-card-inner {
-  position: relative;
-}
+  div.generated-card-inner {
+    position: relative;
 
-div.generated-card > div.generated-card-inner > div.generated-card-background-one {
-  position: absolute;
-  left: 26px;
-  width: 148px;
-  height: 201px;
-  background-repeat: no-repeat;
-  background-size: 201px 201px;
-  background-position: center center;
-  mask-size: 148px 201px;
-  -webkit-mask-size: 148px 201px;
-  mask-repeat: no-repeat;
-  -webkit-mask-repeat: no-repeat;
-}
+    div.generated-card-background-one {
+      position: absolute;
+      left: 26px;
+      width: 148px;
+      height: 201px;
+      background-repeat: no-repeat;
+      background-size: 201px 201px;
+      background-position: center center;
+      mask-size: 148px 201px;
+      -webkit-mask-size: 148px 201px;
+      mask-repeat: no-repeat;
+      -webkit-mask-repeat: no-repeat;
 
-div.generated-card
-  > div.generated-card-inner
-  > div.generated-card-background-one
-  > div.generated-card-background-two {
-  width: 148px;
-  height: 201px;
-  background-repeat: no-repeat;
-  background-size: 201px 201px;
-  background-position: center center;
-}
+      div.generated-card-background-two {
+        width: 148px;
+        height: 201px;
+        background-repeat: no-repeat;
+        background-size: 201px 201px;
+        background-position: center center;
+      }
+    }
 
-div.generated-card > div.generated-card-inner > div.generated-card-foreground {
-  position: absolute;
-  width: 201px;
-  height: 201px;
-  background-repeat: no-repeat;
-  background-size: 230px 230px;
-  background-position: center center;
-}
+    div.generated-card-foreground {
+      position: absolute;
+      width: 201px;
+      height: 201px;
+      background-repeat: no-repeat;
+      background-size: 230px 230px;
+      background-position: center center;
 
-div.generated-card
-  > div.generated-card-inner
-  > div.generated-card-foreground
-  > div.generated-card-logo {
-  margin-top: 120px;
-  width: 201px;
-  height: 102px;
-  background-repeat: no-repeat;
-  background-size: 201px 102px;
+      div.generated-card-logo {
+        margin-top: 120px;
+        width: 201px;
+        height: 102px;
+        background-repeat: no-repeat;
+        background-size: 201px 102px;
+      }
+    }
+  }
 }
 </style>
