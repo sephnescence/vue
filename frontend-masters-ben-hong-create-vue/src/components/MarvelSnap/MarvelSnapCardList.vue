@@ -1,26 +1,19 @@
 <script>
 import MarvelSnapCard from './MarvelSnapCard.vue'
-
-const baseVariantOnly = true
-const selectedCard = null
+import { ref } from 'vue'
 
 export default {
   async setup() {
     const response = await fetch('http://localhost/api/snap_fan_cards/all')
     const cardData = await response.json()
 
-    // So interestingly, despite Ben saying that we didn't need the data() call if we had setup defined, the baseVariantOnly and selectedCard variables were not honoured
-    // const baseVariantOnly = true
-    // const selectedCard = null
+    // Because these are reactive, you need to define them with ref() so that Vue will track them.
+    //  So I no longer need to define them as consts above or have the data() method in use
+    const baseVariantOnly = ref(true)
+    const selectedCard = ref(null)
 
     return {
       cardData,
-      // baseVariantOnly,
-      // selectedCard
-    }
-  },
-  data() {
-    return {
       baseVariantOnly,
       selectedCard
     }
