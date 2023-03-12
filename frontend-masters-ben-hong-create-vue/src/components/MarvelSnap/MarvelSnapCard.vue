@@ -1,9 +1,7 @@
-<script>
-export default {
-  data() {
-    return {}
-  },
-  props: {
+<script setup>
+import { defineEmits, defineProps } from 'vue';
+
+const props = defineProps({
     card: {
       type: Object,
       required: true
@@ -32,13 +30,14 @@ export default {
       type: Boolean,
       required: true
     }
-  },
-  methods: {
-    emitCardSelected() {
-      this.$emit('cardSelected', this.card.name)
-    }
-  },
-  emits: ['cardSelected']
+})
+
+const emits = defineEmits([
+  'cardSelected',
+])
+
+const emitCardSelected = () => {
+  emits('cardSelected', props.card.name)
 }
 </script>
 
