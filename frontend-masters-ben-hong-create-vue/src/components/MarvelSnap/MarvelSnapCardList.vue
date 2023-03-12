@@ -1,34 +1,35 @@
 <script setup>
 import MarvelSnapCard from './MarvelSnapCard.vue'
-import { computed, ref } from 'vue'
+import { computed, reactive } from 'vue'
 
 const response = await fetch('http://localhost/api/snap_fan_cards/all')
 const cardData = await response.json()
 
-// Because these are reactive, you need to define them with ref() so that Vue will track them.
-//  So I no longer need to define them as consts above or have the data() method in use
-const baseVariantOnly = ref(true)
-const showBackground1 = ref(true)
-const showBackground2 = ref(true)
-const showForeground = ref(true)
-const showLogo = ref(true)
-const showMask = ref(true)
-const selectedCard = ref(null)
+const state = reactive({
+  baseVariantOnly: true,
+  showBackground1: true,
+  showBackground2: true,
+  showForeground: true,
+  showLogo: true,
+  showMask: true,
+  selectedCard: null,
+  search: ''
+})
 
-// Alternatively you can use `const state = reactive({})` (imported from vue), but be sure to return it from setup()
-
-// Note that the refs aren't actually true and null respectively, they are RefImpl objects (I think Ben call them reference implementations).
-//  you can access them by calling .value. e.g. baseVariantOnly.value is a boolean
-// Similarly, you might have noticed when console logging, you see Proxies instead. You want to call .target on a Proxy
-
+// So now that I have search, it doesn't appear that computed is debounced after all?
+//  Is it just because I'm using the composition api instead of the options api?
 const filteredCardData = computed(() => {
   const filteredCards = []
 
   Object.values(cardData).forEach((card) => {
-    if (selectedCard.value !== null) {
-      if (card.name !== selectedCard.value) {
+    if (state.selectedCard !== null) {
+      if (card.name !== state.selectedCard) {
         return
       }
+    }
+
+    if (state.search !== '' && !card.name.toLowerCase().includes(state.search.toLowerCase())) {
+      return
     }
 
     const newCard = {
@@ -38,7 +39,7 @@ const filteredCardData = computed(() => {
     }
 
     Object.values(card.variants).forEach((variant) => {
-      if (baseVariantOnly.value && variant.name !== card.name) {
+      if (state.baseVariantOnly && variant.name !== card.name) {
         return
       }
 
@@ -52,31 +53,31 @@ const filteredCardData = computed(() => {
 })
 
 const toggleShowBackground1 = () => {
-  showBackground1.value = !showBackground1.value
+  state.showBackground1 = !state.showBackground1
 }
 
 const toggleShowBackground2 = () => {
-  showBackground2.value = !showBackground2.value
+  state.showBackground2 = !state.showBackground2
 }
 
 const toggleShowForeground = () => {
-  showForeground.value = !showForeground.value
+  state.showForeground = !state.showForeground
 }
 
 const toggleShowLogo = () => {
-  showLogo.value = !showLogo.value
+  state.showLogo = !state.showLogo
 }
 
 const toggleShowMask = () => {
-  showMask.value = !showMask.value
+  state.showMask = !state.showMask
 }
 
 const toggleBaseCardOnly = () => {
-  baseVariantOnly.value = !baseVariantOnly.value
+  state.baseVariantOnly = !state.baseVariantOnly
 }
 
 const resetSelectedCard = () => {
-  selectedCard.value = null
+  state.selectedCard = null
 }
 
 const handleCardSelectedEmission = (newSelectedCard) => {
@@ -84,31 +85,35 @@ const handleCardSelectedEmission = (newSelectedCard) => {
 }
 
 const selectCard = (newSelectedCard) => {
-  selectedCard.value = newSelectedCard
+  state.selectedCard = newSelectedCard
 }
 </script>
 
 <template>
   <div id="app">
-    <button v-if="!baseVariantOnly" @click="toggleBaseCardOnly">Show Base Cards Only</button>
-    <button v-if="baseVariantOnly" @click="toggleBaseCardOnly">Show all Variants</button>
+    <input v-model="state.search" type="search" />
     <br />
-    <button v-if="!showBackground1" @click="toggleShowBackground1">Show Background 1</button>
-    <button v-if="showBackground1" @click="toggleShowBackground1">Hide Background 1</button>
+    <h2>{{ state.search }}</h2>
     <br />
-    <button v-if="!showBackground2" @click="toggleShowBackground2">Show Background 2</button>
-    <button v-if="showBackground2" @click="toggleShowBackground2">Hide Background 2</button>
+    <button v-if="!state.baseVariantOnly" @click="toggleBaseCardOnly">Show Base Cards Only</button>
+    <button v-if="state.baseVariantOnly" @click="toggleBaseCardOnly">Show all Variants</button>
     <br />
-    <button v-if="!showForeground" @click="toggleShowForeground">Show Foreground</button>
-    <button v-if="showForeground" @click="toggleShowForeground">Hide Foreground</button>
+    <button v-if="!state.showBackground1" @click="toggleShowBackground1">Show Background 1</button>
+    <button v-if="state.showBackground1" @click="toggleShowBackground1">Hide Background 1</button>
     <br />
-    <button v-if="!showLogo" @click="toggleShowLogo">Show Logo</button>
-    <button v-if="showLogo" @click="toggleShowLogo">Hide Logo</button>
+    <button v-if="!state.showBackground2" @click="toggleShowBackground2">Show Background 2</button>
+    <button v-if="state.showBackground2" @click="toggleShowBackground2">Hide Background 2</button>
     <br />
-    <button v-if="!showMask" @click="toggleShowMask">Show Mask</button>
-    <button v-if="showMask" @click="toggleShowMask">Hide Mask</button>
+    <button v-if="!state.showForeground" @click="toggleShowForeground">Show Foreground</button>
+    <button v-if="state.showForeground" @click="toggleShowForeground">Hide Foreground</button>
     <br />
-    <template v-if="selectedCard !== null">
+    <button v-if="!state.showLogo" @click="toggleShowLogo">Show Logo</button>
+    <button v-if="state.showLogo" @click="toggleShowLogo">Hide Logo</button>
+    <br />
+    <button v-if="!state.showMask" @click="toggleShowMask">Show Mask</button>
+    <button v-if="state.showMask" @click="toggleShowMask">Hide Mask</button>
+    <br />
+    <template v-if="state.selectedCard !== null">
       <button @click="resetSelectedCard">Reset Selected Card</button>
       <br />
     </template>
@@ -119,12 +124,18 @@ const selectCard = (newSelectedCard) => {
         :key="card.name + '|' + variant.name"
         :card="card"
         :variant="variant"
-        :showBackground1="showBackground1"
-        :showBackground2="showBackground2"
-        :showForeground="showForeground"
-        :showLogo="showLogo"
-        :showMask="showMask"
+        :showBackground1="state.showBackground1"
+        :showBackground2="state.showBackground2"
+        :showForeground="state.showForeground"
+        :showLogo="state.showLogo"
+        :showMask="state.showMask"
       />
     </template>
   </div>
 </template>
+
+<style>
+h2 {
+  color: white;
+}
+</style>
