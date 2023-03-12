@@ -9,6 +9,7 @@ export default {
     const response = await fetch('http://localhost/api/snap_fan_cards/all')
     const cardData = await response.json()
 
+    // So interestingly, despite Ben saying that we didn't need the data() call if we had setup defined, the baseVariantOnly and selectedCard variables were not honoured
     // const baseVariantOnly = true
     // const selectedCard = null
 
