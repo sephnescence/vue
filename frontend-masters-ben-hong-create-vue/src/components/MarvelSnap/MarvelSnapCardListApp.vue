@@ -1,15 +1,10 @@
-<script>
+<script setup>
+import Nav from '../App/Nav.vue';
 import MarvelSnapCardList from './MarvelSnapCardList.vue'
-
-
-export default {
-  components: {
-    MarvelSnapCardList
-  },
-}
 </script>
 
 <template>
+  <Nav />
   <div id="app" class="marvel-snap-card-list">
     <Suspense>
       <MarvelSnapCardList />

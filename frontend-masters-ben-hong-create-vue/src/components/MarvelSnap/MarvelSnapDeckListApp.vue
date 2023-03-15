@@ -1,8 +1,10 @@
 <script setup>
+import Nav from '../App/Nav.vue';
 import MarvelSnapDeckList from './MarvelSnapDeckList.vue'
 </script>
 
 <template>
+  <Nav />
   <div id="app" class="marvel-snap-deck-list">
     <Suspense>
       <MarvelSnapDeckList />

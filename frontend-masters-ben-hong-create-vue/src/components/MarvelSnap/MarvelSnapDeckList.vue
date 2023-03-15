@@ -3,6 +3,7 @@ import MarvelSnapCard from './MarvelSnapCard.vue'
 import decks from './data/decklist.json' // BTTODO - Should fetch from an api, but will need to organise logging in / user accounts
 import { computed } from 'vue';
 
+// BTTODO - I'm not sure if there's a react-query equivalent to use in vue
 const response = await fetch('http://localhost/api/snap_fan_cards/all')
 const cardData = await response.json()
 
