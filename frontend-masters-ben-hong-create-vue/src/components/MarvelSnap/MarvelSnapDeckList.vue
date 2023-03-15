@@ -2,15 +2,17 @@
 import MarvelSnapCard from './MarvelSnapCard.vue'
 import decks from './data/decklist.json' // BTTODO - Should fetch from an api, but will need to organise logging in / user accounts
 import { computed, onMounted } from 'vue';
+import {
+  cardList,
+  loadCardList
+} from '@/composables/useCardListStore';
 
-// BTTODO - I'm not sure if there's a react-query equivalent to use in vue
-const response = await fetch('http://localhost/api/snap_fan_cards/all')
-const cardData = await response.json()
+onMounted(() => {
+  loadCardList()
+})
 
-// BTTODO - Figure out how to abandon the ajax call if the component is unmounted. Suspense seems to interfere
-const mounted = onMounted(() => {
-  console.log('Mounted!')
-});
+// BTTODO - You cannot just load the site on the / and /decks routes. Only /cards works interestingly enough
+// BTTODO - You can only load the /decks page once
 
 const computedDecks = computed(() => {
   const newDecks = []
@@ -23,7 +25,7 @@ const computedDecks = computed(() => {
     }
 
     deck.cards.forEach((deckCard) => {
-      const card = cardData[deckCard.cardName]
+      const card = cardList.value[deckCard.cardName]
 
       if (card) {
         const variant = card.variants[deckCard.variantName]
@@ -35,7 +37,7 @@ const computedDecks = computed(() => {
       }
 
       // BTTODO - Should add a better backup. Ideally make a junk card that's just a silhouette
-      const cardBackup = cardData['Ghost']
+      const cardBackup = cardList.value['Ghost']
       cardBackup.variants = [cardBackup.variants['Ghost']]
       newDeck.cards.push(cardBackup)
     })

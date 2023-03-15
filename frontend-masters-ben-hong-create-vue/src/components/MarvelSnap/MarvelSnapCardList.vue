@@ -1,9 +1,14 @@
 <script setup>
 import MarvelSnapCard from './MarvelSnapCard.vue'
-import { computed, reactive } from 'vue'
+import { computed, reactive, onMounted } from 'vue'
+import {
+  cardList,
+  loadCardList
+} from '@/composables/useCardListStore';
 
-const response = await fetch('http://localhost/api/snap_fan_cards/all')
-const cardData = await response.json()
+onMounted(() => {
+  loadCardList()
+})
 
 const state = reactive({
   baseVariantOnly: true,
@@ -21,7 +26,7 @@ const state = reactive({
 const filteredCardData = computed(() => {
   const filteredCards = []
 
-  Object.values(cardData).forEach((card) => {
+  Object.values(cardList.value).forEach((card) => {
     if (state.selectedCard !== null) {
       if (card.name !== state.selectedCard) {
         return
