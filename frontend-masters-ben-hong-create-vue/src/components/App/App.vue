@@ -1,5 +1,12 @@
-<script setup></script>
+<script></script>
 
 <template>
-  <router-view />
+    <router-view />
 </template>
+
+<style>
+body {
+  margin: 0;
+  background-color: #2c0b47;
+}
+</style>

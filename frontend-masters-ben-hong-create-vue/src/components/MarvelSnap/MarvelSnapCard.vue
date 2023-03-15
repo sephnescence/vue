@@ -49,7 +49,7 @@ const emitCardSelected = () => {
         v-if="variant.downloads.backgrounds[0]"
         :style="{
           backgroundImage: showBackground1 ? 'url(' + variant.downloads.backgrounds[0] + ')' : 'none',
-          maskImage: showMask ? 'url(http://[::1]:4002/resources/images/cardmask.webp)' : 'none' // BTTODO - Get from the api
+          maskImage: showMask ? 'url(http://[::1]:5174/resources/images/cardmask.webp)' : 'none' // BTTODO - Get from the api
         }"
       >
         <div
