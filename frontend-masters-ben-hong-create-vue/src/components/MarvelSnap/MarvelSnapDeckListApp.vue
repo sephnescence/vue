@@ -17,10 +17,6 @@ import MarvelSnapDeckList from './MarvelSnapDeckList.vue'
 </template>
 
 <style>
-body {
-  margin: 0;
-  background-color: #2c0b47;
-}
 .marvel-snap-deck-list {
   padding: 8px;
   color: white;

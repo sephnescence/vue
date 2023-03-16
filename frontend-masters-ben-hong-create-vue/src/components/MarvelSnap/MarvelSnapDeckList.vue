@@ -1,20 +1,18 @@
 <script setup>
 import MarvelSnapCard from './MarvelSnapCard.vue'
 import decks from './data/decklist.json' // BTTODO - Should fetch from an api, but will need to organise logging in / user accounts
-import { computed, onMounted } from 'vue';
-import {
-  cardList,
-  loadCardList
-} from '@/composables/useCardListStore';
+import { computed, onMounted } from 'vue'
+import { cardList, cardListStoreIsLoading, loadCardList } from '@/composables/useCardListStore'
 
 onMounted(() => {
   loadCardList()
 })
 
-// BTTODO - You cannot just load the site on the / and /decks routes. Only /cards works interestingly enough
-// BTTODO - You can only load the /decks page once
-
 const computedDecks = computed(() => {
+  if (cardListStoreIsLoading.value === true) {
+    return []
+  }
+
   const newDecks = []
 
   decks.forEach((deck) => {
@@ -25,20 +23,21 @@ const computedDecks = computed(() => {
     }
 
     deck.cards.forEach((deckCard) => {
-      const card = cardList.value[deckCard.cardName]
-
-      if (card) {
-        const variant = card.variants[deckCard.variantName]
-        if (variant) {
-          card.variants = [variant]
-          newDeck.cards.push(card)
-          return
+      if (cardList.value[deckCard.cardName]) {
+        const card = { ...cardList.value[deckCard.cardName] } // This is apparently the fastest way to clone an object
+        if (card.variants[deckCard.variantName]) {
+          const variant = { ...card.variants[deckCard.variantName] } // This is apparently the fastest way to clone an object
+          if (variant) {
+            card.variants = [variant]
+            newDeck.cards.push(card)
+            return
+          }
         }
       }
 
       // BTTODO - Should add a better backup. Ideally make a junk card that's just a silhouette
-      const cardBackup = cardList.value['Ghost']
-      cardBackup.variants = [cardBackup.variants['Ghost']]
+      const cardBackup = { ...cardList.value['Ghost'] }
+      cardBackup.variants = [{ ...cardBackup.variants['Ghost'] }]
       newDeck.cards.push(cardBackup)
     })
 
@@ -74,7 +73,8 @@ const computedDecks = computed(() => {
 </template>
 
 <style>
-h2, h3 {
+h2,
+h3 {
   color: white;
 }
 </style>

@@ -8,7 +8,6 @@ const cardListStoreIsLoading = ref(true)
 //  There appears to be no harm in leaving it here, and moving to a singleton thing really helps a lot anyways
 const loadCardList = () => {
     if (cardListStoreIsLoading.value === false) {
-        console.log('Already loaded!');
         return {
             cardList: cardList.value,
             error: cardListError.value,
@@ -16,14 +15,12 @@ const loadCardList = () => {
         }
     }
 
-    console.log('fetching api - begin!')
     // BTTODO - I'm not sure if there's a react-query equivalent to use in vue
     fetch('http://localhost/api/snap_fan_cards/all')
         .then((response) => response.json())
         .then((jsonResponse) => {
             cardListStoreIsLoading.value = false
             cardList.value = jsonResponse
-            console.log('fetching api - end!')
         })
         .catch((error) => {
             cardListStoreIsLoading.value = false
