@@ -2,41 +2,43 @@ import { ref } from "vue";
 
 const cardList = ref([])
 const cardListError = ref(null)
-const cardListStoreIsLoading = ref(true)
+const cardListStoreStatus = ref('idle')
 
-// BTTODO - Figure out how to abandon the ajax call if the component is unmounted. Suspense seems to interfere
-//  There appears to be no harm in leaving it here, and moving to a singleton thing really helps a lot anyways
+// BTTODO - Figure out how to abandon the ajax call if the component is unmounted
 const loadCardList = () => {
-    if (cardListStoreIsLoading.value === false) {
+    if (cardListStoreStatus.value === 'complete') {
         return {
             cardList: cardList.value,
             error: cardListError.value,
-            loading: cardListStoreIsLoading.value,
+            status: cardListStoreStatus.value,
         }
     }
 
-    // BTTODO - I'm not sure if there's a react-query equivalent to use in vue
-    fetch('http://localhost/api/snap_fan_cards/all')
+    if (cardListStoreStatus.value === 'idle') {
+        cardListStoreStatus.value = 'pending'
+        // BTTODO - I'm not sure if there's a react-query equivalent to use in vue
+        fetch('http://localhost/api/snap_fan_cards/all')
         .then((response) => response.json())
         .then((jsonResponse) => {
-            cardListStoreIsLoading.value = false
+            cardListStoreStatus.value = 'complete'
             cardList.value = jsonResponse
         })
         .catch((error) => {
-            cardListStoreIsLoading.value = false
+            cardListStoreStatus.value = 'error'
             cardListError.value = error
         })
+    }
 
     return {
         cardList: cardList.value,
         error: cardListError.value,
-        loading: cardListStoreIsLoading.value,
+        status: cardListStoreStatus.value,
     }
 }
 
 export {
     cardList,
     cardListError,
-    cardListStoreIsLoading,
+    cardListStoreStatus,
     loadCardList
 }

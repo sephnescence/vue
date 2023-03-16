@@ -2,14 +2,14 @@
 import MarvelSnapCard from './MarvelSnapCard.vue'
 import decks from './data/decklist.json' // BTTODO - Should fetch from an api, but will need to organise logging in / user accounts
 import { computed, onMounted } from 'vue'
-import { cardList, cardListStoreIsLoading, loadCardList } from '@/composables/useCardListStore'
+import { cardList, cardListStoreStatus, loadCardList } from '@/composables/useCardListStore'
 
 onMounted(() => {
   loadCardList()
 })
 
 const computedDecks = computed(() => {
-  if (cardListStoreIsLoading.value === true) {
+  if (cardListStoreStatus.value !== 'complete') {
     return []
   }
 
@@ -51,7 +51,9 @@ const computedDecks = computed(() => {
 <template>
   <div id="app">
     <h2>Marvel Snap Decks</h2>
-    <div class="decks">
+    <h2 v-if="cardListStoreStatus === 'error'">Failed to load decks & cards</h2>
+    <h2 v-if="cardListStoreStatus !== 'complete'">Loading decks & cards</h2>
+    <div v-else class="decks">
       <div class="deck" v-for="deck in computedDecks" :key="deck.id">
         <h3>{{ deck.name }}</h3>
         <template v-for="card in deck.cards" :key="card.name">

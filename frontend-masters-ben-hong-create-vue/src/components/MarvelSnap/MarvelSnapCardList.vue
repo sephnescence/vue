@@ -1,10 +1,7 @@
 <script setup>
 import MarvelSnapCard from './MarvelSnapCard.vue'
 import { computed, reactive, onMounted } from 'vue'
-import {
-  cardList,
-  loadCardList
-} from '@/composables/useCardListStore';
+import { cardList, cardListStoreStatus, loadCardList } from '@/composables/useCardListStore'
 
 onMounted(() => {
   loadCardList()
@@ -96,45 +93,55 @@ const selectCard = (newSelectedCard) => {
 
 <template>
   <div id="app">
-    <input v-model="state.search" type="search" />
-    <br />
-    <h2>{{ state.search }}</h2>
-    <br />
-    <button v-if="!state.baseVariantOnly" @click="toggleBaseCardOnly">Show Base Cards Only</button>
-    <button v-if="state.baseVariantOnly" @click="toggleBaseCardOnly">Show all Variants</button>
-    <br />
-    <button v-if="!state.showBackground1" @click="toggleShowBackground1">Show Background 1</button>
-    <button v-if="state.showBackground1" @click="toggleShowBackground1">Hide Background 1</button>
-    <br />
-    <button v-if="!state.showBackground2" @click="toggleShowBackground2">Show Background 2</button>
-    <button v-if="state.showBackground2" @click="toggleShowBackground2">Hide Background 2</button>
-    <br />
-    <button v-if="!state.showForeground" @click="toggleShowForeground">Show Foreground</button>
-    <button v-if="state.showForeground" @click="toggleShowForeground">Hide Foreground</button>
-    <br />
-    <button v-if="!state.showLogo" @click="toggleShowLogo">Show Logo</button>
-    <button v-if="state.showLogo" @click="toggleShowLogo">Hide Logo</button>
-    <br />
-    <button v-if="!state.showMask" @click="toggleShowMask">Show Mask</button>
-    <button v-if="state.showMask" @click="toggleShowMask">Hide Mask</button>
-    <br />
-    <template v-if="state.selectedCard !== null">
-      <button @click="resetSelectedCard">Reset Selected Card</button>
+    <h2 v-if="cardListStoreStatus === 'error'">Failed to load decks & cards</h2>
+    <h2 v-if="cardListStoreStatus !== 'complete'">Loading decks & cards</h2>
+    <template v-else>
+      <input v-model="state.search" type="search" />
       <br />
-    </template>
-    <template v-for="card in filteredCardData" :key="card.name">
-      <MarvelSnapCard
-        v-for="variant in card.variants"
-        v-on:card-selected="handleCardSelectedEmission"
-        :key="card.name + '|' + variant.name"
-        :card="card"
-        :variant="variant"
-        :showBackground1="state.showBackground1"
-        :showBackground2="state.showBackground2"
-        :showForeground="state.showForeground"
-        :showLogo="state.showLogo"
-        :showMask="state.showMask"
-      />
+      <h2>{{ state.search }}</h2>
+      <br />
+      <button v-if="!state.baseVariantOnly" @click="toggleBaseCardOnly">
+        Show Base Cards Only
+      </button>
+      <button v-if="state.baseVariantOnly" @click="toggleBaseCardOnly">Show all Variants</button>
+      <br />
+      <button v-if="!state.showBackground1" @click="toggleShowBackground1">
+        Show Background 1
+      </button>
+      <button v-if="state.showBackground1" @click="toggleShowBackground1">Hide Background 1</button>
+      <br />
+      <button v-if="!state.showBackground2" @click="toggleShowBackground2">
+        Show Background 2
+      </button>
+      <button v-if="state.showBackground2" @click="toggleShowBackground2">Hide Background 2</button>
+      <br />
+      <button v-if="!state.showForeground" @click="toggleShowForeground">Show Foreground</button>
+      <button v-if="state.showForeground" @click="toggleShowForeground">Hide Foreground</button>
+      <br />
+      <button v-if="!state.showLogo" @click="toggleShowLogo">Show Logo</button>
+      <button v-if="state.showLogo" @click="toggleShowLogo">Hide Logo</button>
+      <br />
+      <button v-if="!state.showMask" @click="toggleShowMask">Show Mask</button>
+      <button v-if="state.showMask" @click="toggleShowMask">Hide Mask</button>
+      <br />
+      <template v-if="state.selectedCard !== null">
+        <button @click="resetSelectedCard">Reset Selected Card</button>
+        <br />
+      </template>
+      <template v-for="card in filteredCardData" :key="card.name">
+        <MarvelSnapCard
+          v-for="variant in card.variants"
+          v-on:card-selected="handleCardSelectedEmission"
+          :key="card.name + '|' + variant.name"
+          :card="card"
+          :variant="variant"
+          :showBackground1="state.showBackground1"
+          :showBackground2="state.showBackground2"
+          :showForeground="state.showForeground"
+          :showLogo="state.showLogo"
+          :showMask="state.showMask"
+        />
+      </template>
     </template>
   </div>
 </template>
