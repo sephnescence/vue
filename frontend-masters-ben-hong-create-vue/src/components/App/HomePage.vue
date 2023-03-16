@@ -1,5 +1,11 @@
 <script setup>
 import Nav from './Nav.vue'
+import { onMounted } from 'vue'
+import { loadCardList } from '@/composables/useCardListStore'
+
+onMounted(() => {
+  loadCardList()
+})
 </script>
 
 <!-- This file must be called HomePage, it seems -->
