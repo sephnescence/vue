@@ -1,6 +1,6 @@
 <script setup>
 import MarvelSnapCard from './MarvelSnapCard.vue'
-import decks from './data/decklist.json' // BTTODO - Should fetch from an api, but will need to organise logging in / user accounts
+import decks from './data/decklist.json'
 import { computed, onMounted } from 'vue'
 import { cardList, cardListStoreStatus, loadCardList } from '@/composables/useCardListStore'
 
@@ -35,7 +35,6 @@ const computedDecks = computed(() => {
         }
       }
 
-      // BTTODO - Should add a better backup. Ideally make a junk card that's just a silhouette
       const cardBackup = { ...cardList.value['Ghost'] }
       cardBackup.variants = [{ ...cardBackup.variants['Ghost'] }]
       newDeck.cards.push(cardBackup)

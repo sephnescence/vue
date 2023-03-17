@@ -1,6 +1,5 @@
 <script setup></script>
 
-<!-- BTTODO - How to add a class to indicate what route I'm already on? -->
 <template>
   <nav style="$style.nav">
     <router-link to="/"> Home </router-link>
